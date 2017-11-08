@@ -8,6 +8,7 @@ public class Test {
     public static final int PORTNO = 4241;
     public static void main (String[] args){
 
+        //GIT TEST HOSSAM
         //EXO3
 //        HelloMessage h = new HelloMessage("HELLO;Bob;42;60;2;Kan;Pab");
 //        h.addPeer("hoss");
