@@ -12,7 +12,7 @@ public class Test {
 //        HelloMessage h = new HelloMessage("HELLO;Bob;42;60;2;Kan;Pab");
 //        h.addPeer("hoss");
 //        System.out.println(h.getHelloMessageAsEncodedString());
-//        System.out.println(h); TEST DE MODIF
+//        System.out.println(h);
 
         //EXO6
         DatagramSocket mySocket = null;
