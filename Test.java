@@ -6,6 +6,8 @@ public class Test {
 
     public static final boolean DEBUG = true;
     public static final int PORTNO = 4241;
+    public static final int HELLOINTERVAL = 60;     //in s
+    public static final int SENDINGPERIOD = 5000;    //in ms
     public static void main (String[] args){
 
         //GIT TEST HOSSAM
@@ -32,7 +34,6 @@ public class Test {
         MuxDemuxSimple dm = new MuxDemuxSimple(handlers, mySocket);
 
         new Thread(dm).start();
-        dm.send("HELLO;"+dm.getMyID()+";42;60;0");
         for( int i = 0 ; i<handlers.length ; i++){
             new Thread((Runnable) handlers[i]).start();
         }

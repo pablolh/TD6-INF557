@@ -1,6 +1,5 @@
 /* Le Hénaff Pablo ; Basudan Hossam*/
 
-import java.util.concurrent.LinkedBlockingDeque;
 
 public class HelloSender implements SimpleMessageHandler, Runnable{
     private MuxDemuxSimple myMuxDemux = null;
@@ -10,24 +9,20 @@ public class HelloSender implements SimpleMessageHandler, Runnable{
     }
 
     public void handleMessage(String m){
-        //ON FAIT RIEN
+        //Nothing to do
     }
 
-    //Sender Thread
+
     public void run(){
         while (true){
-            //Handle message (send)
             try {
-                Thread.sleep(5000);
-                int counter = 0;
-                String peerList = "";
+                Thread.sleep(Test.SENDINGPERIOD);
+                //TODO change the seqenceNo to be sent
+                HelloMessage toBeSent = new HelloMessage(myMuxDemux.getMyID(), 42 ,Test.HELLOINTERVAL);
                 for (PeerRecord pr : myMuxDemux.getPeerTable()) {
-
                     if (pr.getPeerState().equals("heard")) {
-                        counter++;
-                        peerList += ";" + pr.getPeerID();
+                        toBeSent.addPeer(pr.getPeerID());
                     }
-                    HelloMessage toBeSent = new HelloMessage("HELLO;" + myMuxDemux.getMyID() + ";42;60;" + counter + peerList);
                     myMuxDemux.send(toBeSent.getHelloMessageAsEncodedString());
                 }
             } catch (Exception e) {

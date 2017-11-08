@@ -1,5 +1,4 @@
 /* Le Hénaff Pablo ; Basudan Hossam*/
-import java.net.InetAddress;
 import java.util.Vector;
 
 public class HelloMessage {
@@ -8,18 +7,15 @@ public class HelloMessage {
     private int helloInterval;
     private int numPeers;
     private Vector<String> peer;
-    private InetAddress IPAddress;
 
 
     public HelloMessage(String s)  throws Exception {
         s = s.replaceAll("[\\t\\n\\r]+", "");
         String [] tmp = s.split(";");
-        //ERROR HANDLING
 
+        //ERROR HANDLING
         if (tmp.length<5)
             throw new Exception("incorrect format of HelloMessage less than 5 elements");
-//        if(tmp[0] != "HELLO")
-//            System.err.println("incorrect format of HelloMessage  ");
         if(tmp[1].length() > 16)
             throw new Exception("incorrect format of HelloMessage id plus than 16 char");
         if(Integer.parseInt(tmp[3]) < 0 || Integer.parseInt(tmp[3])>255)
@@ -46,7 +42,8 @@ public class HelloMessage {
         this.sequenceNo= sequenceNo;
         this.helloInterval=HelloInterval;
         this.numPeers=0;
-        this.peer= new Vector<String>();
+        this.peer = new Vector<String>();
+
     }
 
     public void addPeer(String peerID){
@@ -62,8 +59,10 @@ public class HelloMessage {
     public String getHelloMessageAsEncodedString(){
         String s= "HELLO;" + this.senderID + ";" + this.sequenceNo + ";" +
                 this.helloInterval + ";" + this.numPeers;
-        for (int i= 0 ; i<this.peer.size(); i++){
-            s+= ";" + this.peer.get(i);
+        if(this.numPeers>0){
+            for (int i= 0 ; i<this.peer.size(); i++){
+                s+= ";" + this.peer.get(i);
+            }
         }
         return s;
     }
@@ -91,26 +90,12 @@ public class HelloMessage {
     }
 
 
-    public int getHelloInterval() {
-        return helloInterval;
-    }
-
-
-    public int getNumPeers() {
-        return numPeers;
-    }
+    public int getHelloInterval() { return helloInterval; }
 
 
     public Vector<String> getPeer() {
         return peer;
     }
 
-    public InetAddress getIPAddress() {
-        return this.IPAddress;
-    }
-
-    public void setIPAddress(InetAddress IPAddress) {
-        this.IPAddress = IPAddress;
-    }
 
 }
