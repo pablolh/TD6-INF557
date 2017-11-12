@@ -1,0 +1,6 @@
+How we conducted interoperability tests:
+
+First, we tested our code by sending custom UDP packets from one computer using the netcat (nc) command line utility on Linux. It sends custom datagram packets through UDP.
+We can only do that when connected to the same wifi or in salle info, since DSI blocks the UDP protocol coming from outside.
+
+Then, during the last TP, we just listened to port 4242 in salle info, and as everyone was running their program then we had lots of HELLO messages coming from different senders, so we could properly check that our peer table implementation was running fine.
