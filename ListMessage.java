@@ -34,7 +34,7 @@ public class ListMessage {
     }
 
 
-    // TO PABLO : WHY WE NEED GENERATORS?
+    // TO PABLO : WHY WE NEED GENERATORS? -> because we need to send List messages upon receipt of a syn message
     //ListMessage GENERATOR
     public ListMessage(String senderID, String peerID, int sequenceNo, int TotalParts) throws Exception{
         if(senderID.length() > 16)

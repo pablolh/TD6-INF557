@@ -4,7 +4,7 @@ public class Database {
 	
 	private int databaseSequenceNumber = 0;
 	
-	private LinkedBlockingDeque<String> stringQueue;
+	public LinkedBlockingDeque<String> stringQueue;
 	
 	Database() {
 		
@@ -21,5 +21,10 @@ public class Database {
 	public void update() {
 		
 		databaseSequenceNumber ++;
+	}
+
+
+	public int size() {
+		return stringQueue.size();
 	}
 }

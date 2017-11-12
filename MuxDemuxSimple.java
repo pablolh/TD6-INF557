@@ -17,6 +17,8 @@ public class MuxDemuxSimple implements Runnable{
     private LinkedBlockingDeque<String> outgoing = new LinkedBlockingDeque<String>(20);
     private LinkedBlockingDeque<PeerRecord> peerTable = new LinkedBlockingDeque<PeerRecord>(20);
     private String myID ="hell";
+    
+    public Database myDatabase = new Database();
 
     public MuxDemuxSimple (SimpleMessageHandler[] h, DatagramSocket s){
         if(s==null)
