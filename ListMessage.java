@@ -13,6 +13,8 @@ public class ListMessage {
         s = s.replaceAll("[\\t\\n\\r]+", "");
         String [] tmp = s.split(";");
         //ERROR HANDLING
+        if(!tmp[0].equals("LIST"))
+        	throw new Exception("ListMessage PARSER : not a LIST message");
         if (tmp.length<7)
             throw new Exception("ListMessage PARSER : incorrect format of SynMessage less than 7 elements");
         if(tmp[1].length() > 16)
@@ -72,4 +74,34 @@ public class ListMessage {
                 ", data='" + data + '\'' +
                 '}';
     }
+
+
+	public String getSenderID() {
+		return senderID;
+	}
+
+
+	public String getPeerID() {
+		return peerID;
+	}
+
+
+	public int getSequenceNo() {
+		return sequenceNo;
+	}
+
+
+	public int getTotalParts() {
+		return TotalParts;
+	}
+
+
+	public int getPartNo() {
+		return partNo;
+	}
+
+
+	public String getData() {
+		return data;
+	}
 }
