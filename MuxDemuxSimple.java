@@ -24,7 +24,7 @@ public class MuxDemuxSimple implements Runnable{
     //              H1 : Do we all have the same database with different versions? --> only update
     //              H2 : Each machine is responsible of a small part of the database and I keep a backup?
     //              I will code ListReceiver based on H2 after discussion robin
-    public Database myDatabase = new Database();
+    public Database myDatabase = new Database(20);
     private ConcurrentHashMap<String, Database> othersDatabases= new ConcurrentHashMap<String, Database> ();
 
 

@@ -19,29 +19,29 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 	public void run() {
 		while(true) {
 			try {
-				ListMessage listMessage = new ListMessage(incoming.take());
+				String[] split = incoming.take().split("/");
+				ListMessage listMessage = new ListMessage(split[1]);
 				String senderID =listMessage.getSenderID();
 
 
 				//What about ignoring all list messages from peer if we already synchronized?
 				// the message is for me : let me update my database
 				// also: sequence numbers correspond
-				if(myMuxDemux.getbyID(senderID).getPeerState().equals("synchronized") &&
-						!listMessage.getPeerID().equals(myMuxDemux.getMyID()) &&
+				if(!listMessage.getPeerID().equals(myMuxDemux.getMyID()) &&
 						listMessage.getSequenceNo() == myMuxDemux.getbyID(senderID).getPeerSeqNum() ) {
 
 					// TODO questions:
 					// 				for seqNo we check equality? I think of it as, i receive the same version as
 					//				the one I asked for from the peer that told me by a hello message that he has the
 					//				version x
-					//				how to verify that I received all list messages?
+
 
 
 					if(images.containsKey(senderID)){
 
 						//the last used seq# for this senderId
 						int oldSeqNo = images.get(senderID).getDatabaseSequenceNumber();
-						
+
 						//the SeqNo hasn't changed means that there is not a new version
 						// of the peer database and I still deal with the old one
 						if(oldSeqNo==listMessage.getSequenceNo()){
