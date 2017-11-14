@@ -25,7 +25,8 @@ public class ListMessage {
             throw new Exception("ListMessage PARSER : incorrect format of SynMessage sequence number bounders");
         if(tmp[5].length()>255)
             throw new Exception("ListMessage PARSER : incorrect format of data sequence number bounders");
-
+        if(Integer.parseInt(tmp[5])>Integer.parseInt(tmp[4]))
+            throw new Exception("ListMessage PARSER : partNo > TotalParts ");
         this.senderID = tmp[1];
         this.peerID= tmp[2];
         this.sequenceNo = Integer.parseInt(tmp[3]);

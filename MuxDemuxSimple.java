@@ -17,7 +17,12 @@ public class MuxDemuxSimple implements Runnable{
     private LinkedBlockingDeque<String> outgoing = new LinkedBlockingDeque<String>(20);
     private LinkedBlockingDeque<PeerRecord> peerTable = new LinkedBlockingDeque<PeerRecord>(20);
     private String myID ="hell";
-    
+
+    //TODO questions:
+    //              "create and test the databases of my peers?"
+    //              H1 : Do we all have the same database with different versions? --> only update
+    //              I will code ListReceiver based on H1
+    //              H2 : Each machine is responsible of a small part of the database and I keep a backup?
     public Database myDatabase = new Database();
 
     public MuxDemuxSimple (SimpleMessageHandler[] h, DatagramSocket s){

@@ -17,8 +17,8 @@ public class HelloSender implements SimpleMessageHandler, Runnable{
         while (true){
             try {
                 Thread.sleep(Test.SENDINGPERIOD);
-                //TODO change the seqenceNo to be sent
-                HelloMessage toBeSent = new HelloMessage(myMuxDemux.getMyID(), 42 ,Test.HELLOINTERVAL);
+                HelloMessage toBeSent = new HelloMessage(myMuxDemux.getMyID()
+                        , myMuxDemux.myDatabase.getDatabaseSequenceNumber() ,Test.HELLOINTERVAL);
                 for (PeerRecord pr : myMuxDemux.getPeerTable()) {
                     if (pr.getPeerState().equals("heard")) {
                         toBeSent.addPeer(pr.getPeerID());

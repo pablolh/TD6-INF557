@@ -5,7 +5,7 @@ public class SynSender implements SimpleMessageHandler, Runnable {
 	
 	@Override
 	public void run() {
-		// periodically send SYN messages to peers that are not synchronized
+		// periodically send SYN messages to peers to become synchronized
 		
 		while(true) {
 			

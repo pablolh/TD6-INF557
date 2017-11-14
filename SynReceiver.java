@@ -15,26 +15,44 @@ public class SynReceiver implements SimpleMessageHandler, Runnable  {
 		
 		try {
 			SynMessage synMessage = new SynMessage(incoming.take());
-			
 			// TODO: how to ignore syn messages received while sending list messages to that peer ?
 			// ie how to check that the last LIST message has already been sent ? -> peer state updated ?
-			
-			synchronized (myMuxDemux.myDatabase) { // used this new design: database is public and we need to add synchronized block each time we access it
-				
-				int index = 0;
-				for(String dataString : myMuxDemux.myDatabase.stringQueue) {
-					
-					ListMessage listMessage = new ListMessage(myMuxDemux.getMyID(), synMessage.getPeerId(), synMessage.getSequenceN(), myMuxDemux.myDatabase.size());
-					
-					// tell to listMessage what is the data and which part it contains
-					listMessage.setPartNoAndData((index++), dataString);
-					
-					myMuxDemux.send(listMessage.getListMessageAsEncodedString());
+			// Hossam : if the syn message received while we send List messages it will be ignored be the process
+			// 			busy sending the list messages, after sending the list messages we change the state
+			// 			We check the state before processing to ignore already syn peers?
+
+			//IS SYN message for me?
+			//Are't we already synchronized?
+			//Do I have the  version"I think of database seq# as different versions of the same doc" he needs?
+			if(synMessage.getPeerId().equals(myMuxDemux.getMyID()) &&
+					!myMuxDemux.getbyID(synMessage.getPeerId()).getPeerState().equals("synchronized")&&
+					synMessage.getSequenceN()==myMuxDemux.myDatabase.getDatabaseSequenceNumber()) {
+
+
+				synchronized (myMuxDemux.myDatabase.stringQueue) { // used this new design: database is public and we need to add synchronized block each time we access it
+
+					int index = 0;
+					for (String dataString : myMuxDemux.myDatabase.stringQueue) {
+
+						ListMessage listMessage = new ListMessage(myMuxDemux.getMyID(), synMessage.getPeerId(), synMessage.getSequenceN(), myMuxDemux.myDatabase.size());
+
+						// tell to listMessage what is the data and which part it contains
+						listMessage.setPartNoAndData((index++), dataString);
+
+						myMuxDemux.send(listMessage.getListMessageAsEncodedString());
+					}
+
+					//After sending we update peer state without verifying that the messages were really sent!
+					//TODO questions:
+					//				Do I need to update the peerSyn# in my peerTable?
+					//				how do we get out of synchronized? only way by hello message to "inconsistent"
+					//				how do we get from inconsistent to heard ? after expiration, we remove then we receive new hello message?
+					//				what about dying? why do we use it? isn't dying means remove? or it is more than that?
+					myMuxDemux.getbyID(synMessage.getPeerId()).setPeerState("synchronized");
 				}
 			}
-			
-			
-			
+
+
 		} catch (Exception e) {
 			// useless : SynMessage constructor receiving a HelloMessage string is normal
 			// another idea ? maybe SynMessage should raise a different exception when not the right type of message, so we can do nothing in that case
