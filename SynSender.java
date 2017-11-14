@@ -6,6 +6,8 @@ public class SynSender implements SimpleMessageHandler, Runnable {
 	@Override
 	public void run() {
 		// periodically send SYN messages to peers to become synchronized
+
+
 		
 		while(true) {
 			
@@ -15,6 +17,8 @@ public class SynSender implements SimpleMessageHandler, Runnable {
                 for (PeerRecord pr : myMuxDemux.getPeerTable()) {
                 	
                 	// checks whether pr has state = synchronized
+					//TODO questions:
+						//We are in inconsistent and we want to become synchronized!
                     if (!pr.getPeerState().equals("synchronized")) {
 
                     	// senderId = myID

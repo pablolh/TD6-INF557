@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingDeque;
 
 import static java.lang.System.currentTimeMillis;
@@ -21,9 +22,11 @@ public class MuxDemuxSimple implements Runnable{
     //TODO questions:
     //              "create and test the databases of my peers?"
     //              H1 : Do we all have the same database with different versions? --> only update
-    //              I will code ListReceiver based on H1
     //              H2 : Each machine is responsible of a small part of the database and I keep a backup?
+    //              I will code ListReceiver based on H2 after discussion robin
     public Database myDatabase = new Database();
+    private ConcurrentHashMap<String, Database> othersDatabases= new ConcurrentHashMap<String, Database> ();
+
 
     public MuxDemuxSimple (SimpleMessageHandler[] h, DatagramSocket s){
         if(s==null)
@@ -139,6 +142,7 @@ public class MuxDemuxSimple implements Runnable{
         return res;
     }
 
-
-
+    public ConcurrentHashMap<String, Database> getOthersDatabases() {
+        return othersDatabases;
+    }
 }
