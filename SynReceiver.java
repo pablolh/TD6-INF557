@@ -1,3 +1,4 @@
+/* Le Hénaff Pablo ; Basudan Hossam*/
 import java.util.concurrent.LinkedBlockingDeque;
 
 public class SynReceiver implements SimpleMessageHandler, Runnable  {
@@ -53,6 +54,8 @@ public class SynReceiver implements SimpleMessageHandler, Runnable  {
 					}
 				}
 
+
+			} catch (NotRightTypeException e) {
 
 			} catch (Exception e) {
 				// useless : SynMessage constructor receiving a HelloMessage string is normal

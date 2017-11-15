@@ -23,8 +23,8 @@ public class HelloSender implements SimpleMessageHandler, Runnable{
                     if (pr.getPeerState().equals("heard")) {
                         toBeSent.addPeer(pr.getPeerID());
                     }
-                    myMuxDemux.send(toBeSent.getHelloMessageAsEncodedString());
                 }
+                myMuxDemux.send(toBeSent.getHelloMessageAsEncodedString());
             } catch (Exception e) {
                 e.printStackTrace();
             }

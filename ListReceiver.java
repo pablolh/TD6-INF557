@@ -1,3 +1,4 @@
+/* Le Hénaff Pablo ; Basudan Hossam*/
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -100,10 +101,14 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 
 				}
 				
-			} catch (Exception e) {
+			}catch (NotRightTypeException e){
+
+			}
+			catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 			
 		}
 		

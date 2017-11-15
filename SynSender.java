@@ -1,4 +1,4 @@
-
+/* Le Hénaff Pablo ; Basudan Hossam*/
 public class SynSender implements SimpleMessageHandler, Runnable {
 
 	MuxDemuxSimple myMuxDemux;

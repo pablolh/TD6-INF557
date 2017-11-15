@@ -25,12 +25,13 @@ public class Test {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        SimpleMessageHandler[] handlers = new SimpleMessageHandler[3];
+        SimpleMessageHandler[] handlers = new SimpleMessageHandler[6];
         handlers[0]= new HelloSender();
-        //handlers[0]= new HelloReceiver();
         handlers[1]= new HelloReceiver();
-//        handlers[1]= new HelloReceiver();
         handlers[2]= new DebugReceiver();
+        handlers[3]= new SynReceiver();
+        handlers[4]= new SynSender();
+        handlers[5]= new ListReceiver();
         MuxDemuxSimple dm = new MuxDemuxSimple(handlers, mySocket);
 
         new Thread(dm).start();

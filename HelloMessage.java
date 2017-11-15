@@ -14,6 +14,7 @@ public class HelloMessage {
         String [] tmp = s.split(";");
 
         //ERROR HANDLING
+        if(!tmp[0].equals("HELLO")) throw new NotRightTypeException("Not a HELLO message");
         if (tmp.length<5)
             throw new Exception("incorrect format of HelloMessage less than 5 elements");
         if(tmp[1].length() > 16)

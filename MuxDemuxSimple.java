@@ -37,9 +37,6 @@ public class MuxDemuxSimple implements Runnable{
             }
         mySocket = s;
         myMessageHandlers = h;
-        //TODO check first sequenceNo to be sent
-        HelloMessage firstMessage = new HelloMessage(myID,-1,Test.HELLOINTERVAL);
-        send(firstMessage.getHelloMessageAsEncodedString());
         Thread senderThread = new Thread(new Runnable() {
             @Override
             public void run() {

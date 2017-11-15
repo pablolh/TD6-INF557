@@ -14,7 +14,7 @@ public class ListMessage {
         String [] tmp = s.split(";");
         //ERROR HANDLING
         if(!tmp[0].equals("LIST"))
-        	throw new Exception("ListMessage PARSER : not a LIST message");
+        	throw new NotRightTypeException("ListMessage PARSER : not a LIST message");
         if (tmp.length<7)
             throw new Exception("ListMessage PARSER : incorrect format of SynMessage less than 7 elements");
         if(tmp[1].length() > 16)

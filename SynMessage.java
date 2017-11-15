@@ -1,5 +1,6 @@
 /* Le Hénaff Pablo ; Basudan Hossam*/
 
+
 public class SynMessage {
     private String senderID;
     private String peerID;
@@ -11,7 +12,7 @@ public class SynMessage {
         String [] tmp = s.split(";");
         //ERROR HANDLING
         if(!tmp[0].equals("SYN"))
-        	throw new Exception("SynMessage PARSER : not a SYN message");
+        	throw new NotRightTypeException("SynMessage PARSER : not a SYN message");
         if (tmp.length<4)
             throw new Exception("SynMessage PARSER : incorrect format of SynMessage less than 4 elements");
         if(tmp[1].length() > 16)

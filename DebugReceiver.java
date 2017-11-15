@@ -20,6 +20,7 @@ public class DebugReceiver implements SimpleMessageHandler, Runnable {
     //Sender Thread
     public void run(){
         while (true) {
+
             String msg = null;
             try {
                 msg = incoming.take();
@@ -31,6 +32,7 @@ public class DebugReceiver implements SimpleMessageHandler, Runnable {
             String[] split = msg.split("/");
             System.out.println("DebugReceiver_rawMessage = " + split[0]);
             HelloMessage test = null;
+            System.out.println(myMuxDemux.getOthersDatabases());
 
             try {
                 test = new HelloMessage(split[0]);
