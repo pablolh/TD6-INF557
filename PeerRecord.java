@@ -13,7 +13,8 @@ public class PeerRecord {
     public PeerRecord(HelloMessage helloMessage, String IPAddress){
         peerID = helloMessage.getSenderID();
         peerIPAddress = IPAddress;
-        peerSeqNum =-1;
+        //TODO verify problem sending first hello
+        peerSeqNum =0;
         expirationTime= Instant.now().plusSeconds(helloMessage.getHelloInterval());
         peerState = "heard";
     }
