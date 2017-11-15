@@ -19,7 +19,7 @@ public class SynMessage {
             throw new Exception("SynMessage PARSER : incorrect format of SynMessage senderID more than 16 char");
         if(tmp[2].length() > 16)
             throw new Exception("SynMessage PARSER : incorrect format of SynMessage peerID more than 16 char");
-        if(Integer.parseInt(tmp[2]) < 0 || Integer.parseInt(tmp[2])>255)
+        if(Integer.parseInt(tmp[3]) < 0 || Integer.parseInt(tmp[3])>255)
             throw new Exception("SynMessage PARSER : incorrect format of SynMessage sequence number bounders");
         this.senderID = tmp[1];
         this.peerID= tmp[2];

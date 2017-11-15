@@ -21,9 +21,9 @@ public class ListMessage {
             throw new Exception("ListMessage PARSER : incorrect format of SynMessage senderID more than 16 char");
         if(tmp[2].length() > 16)
             throw new Exception("ListMessage PARSER : incorrect format of SynMessage peerID more than 16 char");
-        if(Integer.parseInt(tmp[2]) < 0 || Integer.parseInt(tmp[2])>255)
+        if(Integer.parseInt(tmp[3]) < 0 || Integer.parseInt(tmp[3])>255)
             throw new Exception("ListMessage PARSER : incorrect format of SynMessage sequence number bounders");
-        if(tmp[5].length()>255)
+        if(tmp[6].length()>255)
             throw new Exception("ListMessage PARSER : incorrect format of data sequence number bounders");
         if(Integer.parseInt(tmp[5])>Integer.parseInt(tmp[4]))
             throw new Exception("ListMessage PARSER : partNo > TotalParts ");

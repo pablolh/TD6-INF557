@@ -34,14 +34,6 @@ public class DebugReceiver implements SimpleMessageHandler, Runnable {
             HelloMessage test = null;
             System.out.println(myMuxDemux.getOthersDatabases());
 
-            try {
-                test = new HelloMessage(split[0]);
-                System.out.println("DebugReceiver_PeerTable = " + myMuxDemux.toStringPeerTable());
-                System.out.println("DebugReceiver_HelloMessage = " + test.getHelloMessageAsEncodedString());
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
         }
     }
