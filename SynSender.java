@@ -17,9 +17,10 @@ public class SynSender implements SimpleMessageHandler, Runnable {
                 for (PeerRecord pr : myMuxDemux.getPeerTable()) {
                 	
                 	// checks whether pr has state = synchronized
-                    if (!pr.getPeerState().equals("synchronized")) {
+                    if (!pr.getPeerState().equals("synchronized") && pr.getPeerSeqNum()!=-1) {
 
                     	// senderId = myID
+
                         SynMessage toBeSent = new SynMessage(myMuxDemux.getMyID(), pr.getPeerID() ,pr.getPeerSeqNum());
                         
                         myMuxDemux.send(toBeSent.getSynMessageAsEncodedString());

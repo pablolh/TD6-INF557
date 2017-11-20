@@ -30,7 +30,7 @@ public class Database {
 	// will be implemented differently. must take LIST messages and append them
 	public void update(ListMessage listMessage) {
 
-
+            stringQueue.add("Hi I Am BIOT");
 			databaseSequenceNumber++;
 
 	}
@@ -46,4 +46,8 @@ public class Database {
 	public int size() {
 		return stringQueue.size();
 	}
+
+	public void setDatabaseSequenceNumber(int databaseSequenceNumber){
+	    this.databaseSequenceNumber=databaseSequenceNumber;
+    }
 }

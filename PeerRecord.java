@@ -14,7 +14,8 @@ public class PeerRecord {
         peerID = helloMessage.getSenderID();
         peerIPAddress = IPAddress;
         //TODO verify problem sending first hello
-        peerSeqNum =0;
+        peerSeqNum =-1;
+        peerSeqNum =-1;
         expirationTime= Instant.now().plusSeconds(helloMessage.getHelloInterval());
         peerState = "heard";
     }

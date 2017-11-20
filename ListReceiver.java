@@ -102,6 +102,7 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 							System.out.println("LISTRECEIVER : updating the real database for "+senderID);
 						if(Test.DEBUG)
 							System.out.println("LISTRECEIVER : the image database is "+images.get(senderID).stringQueue);
+						images.get(senderID).setDatabaseSequenceNumber(listMessage.getSequenceNo());
 						myMuxDemux.getOthersDatabases().put(senderID,images.get(senderID));
 //						myMuxDemux.getOthersDatabases().replace(senderID,images.get(senderID));
 						if(Test.DEBUG)

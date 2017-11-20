@@ -20,9 +20,7 @@ public class HelloSender implements SimpleMessageHandler, Runnable{
                 HelloMessage toBeSent = new HelloMessage(myMuxDemux.getMyID()
                         , myMuxDemux.myDatabase.getDatabaseSequenceNumber() ,Test.HELLOINTERVAL);
                 for (PeerRecord pr : myMuxDemux.getPeerTable()) {
-                    if (pr.getPeerState().equals("heard")) {
-                        toBeSent.addPeer(pr.getPeerID());
-                    }
+                    toBeSent.addPeer(pr.getPeerID());
                 }
                 myMuxDemux.send(toBeSent.getHelloMessageAsEncodedString());
             } catch (Exception e) {

@@ -33,6 +33,7 @@ public class Test {
         handlers[4]= new SynSender();
         handlers[5]= new ListReceiver();
         MuxDemuxSimple dm = new MuxDemuxSimple(handlers, mySocket);
+        dm.myDatabase.update(null);
 
         new Thread(dm).start();
         for( int i = 0 ; i<handlers.length ; i++){
