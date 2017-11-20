@@ -32,8 +32,12 @@ public class DebugReceiver implements SimpleMessageHandler, Runnable {
             String[] split = msg.split("/");
             System.out.println("DebugReceiver_rawMessage = " + split[0]);
             HelloMessage test = null;
+            System.out.println(myMuxDemux.toStringPeerTable());
             System.out.println(myMuxDemux.getOthersDatabases());
 
+
+//            othersDatabases.put("ok", new Database(10));
+//            othersDatabases.get("ok").stringQueue.add("trying");
 
         }
     }

@@ -16,7 +16,7 @@ public class SynReceiver implements SimpleMessageHandler, Runnable  {
 		while(true){
 			try {
 				String[] split = incoming.take().split("/");
-				SynMessage synMessage = new SynMessage(split[1]);
+				SynMessage synMessage = new SynMessage(split[0]);
 				// TODO: how to ignore syn messages received while sending list messages to that peer ?
 				// ie how to check that the last LIST message has already been sent ? -> peer state updated ?
 				// Hossam : if the syn message received while we send List messages it will be ignored be the process
@@ -27,7 +27,6 @@ public class SynReceiver implements SimpleMessageHandler, Runnable  {
 				//Are't we already synchronized?
 				//Do I have the  version he needs?
 				if(synMessage.getPeerId().equals(myMuxDemux.getMyID()) &&
-						!myMuxDemux.getbyID(synMessage.getPeerId()).getPeerState().equals("synchronized")&&
 						synMessage.getSequenceN()==myMuxDemux.myDatabase.getDatabaseSequenceNumber()) {
 
 
@@ -36,7 +35,7 @@ public class SynReceiver implements SimpleMessageHandler, Runnable  {
 						int index = 0;
 						for (String dataString : myMuxDemux.myDatabase.stringQueue) {
 
-							ListMessage listMessage = new ListMessage(myMuxDemux.getMyID(), synMessage.getPeerId(), synMessage.getSequenceN(), myMuxDemux.myDatabase.size());
+							ListMessage listMessage = new ListMessage(myMuxDemux.getMyID(), synMessage.getSenderID(), synMessage.getSequenceN(), myMuxDemux.myDatabase.size());
 
 							// tell to listMessage what is the data and which part it contains
 							listMessage.setPartNoAndData((index++), dataString);
@@ -50,7 +49,8 @@ public class SynReceiver implements SimpleMessageHandler, Runnable  {
 						//				how do we get out of synchronized? only way by hello message to "inconsistent"
 						//				how do we get from inconsistent to heard ? after expiration, we remove then we receive new hello message?
 						//				what about dying? why do we use it? isn't dying means remove? or it is more than that?
-						myMuxDemux.getbyID(synMessage.getPeerId()).setPeerState("synchronized");
+
+						myMuxDemux.getbyID(synMessage.getSenderID()).setPeerState("synchronized");
 					}
 				}
 

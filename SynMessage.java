@@ -43,7 +43,9 @@ public class SynMessage {
     public String getSynMessageAsEncodedString(){
         return "SYN;" + this.senderID + ";" + this.peerID + ";" + this.sequenceNo + ";";
     }
-    
+    public String getSenderID() {
+        return senderID;
+    }
     public String getPeerId() {
     	return peerID;
     }

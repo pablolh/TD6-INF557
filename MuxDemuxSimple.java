@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingDeque;
 
@@ -29,6 +30,7 @@ public class MuxDemuxSimple implements Runnable{
 
 
     public MuxDemuxSimple (SimpleMessageHandler[] h, DatagramSocket s){
+
         if(s==null)
             try {
                 exit(1);
@@ -141,5 +143,13 @@ public class MuxDemuxSimple implements Runnable{
 
     public ConcurrentHashMap<String, Database> getOthersDatabases() {
         return othersDatabases;
+    }
+
+    public String toStringOthersDatabases(){
+        String s= "OthersDatabase {";
+        for(Map.Entry<String,Database> db : othersDatabases.entrySet())
+            s+="<"+db.getKey()+"+"+db.getValue();
+        s+=" }";
+        return s;
     }
 }

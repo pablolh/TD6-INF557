@@ -16,6 +16,9 @@ public class Database {
 	Database(int size) {
 		
 		stringQueue	=	Collections.synchronizedList(new ArrayList<String>(size));
+//		for(int i = 0 ; i<size ; i++){
+//			stringQueue.add("");
+//		}
 		
 	}
 	
@@ -27,10 +30,18 @@ public class Database {
 	// will be implemented differently. must take LIST messages and append them
 	public void update(ListMessage listMessage) {
 
+
 			databaseSequenceNumber++;
 
 	}
 
+	@Override
+	public String toString() {
+		return "Database{" +
+				"databaseSequenceNumber=" + databaseSequenceNumber +
+				", stringQueue=" + stringQueue +
+				'}';
+	}
 
 	public int size() {
 		return stringQueue.size();

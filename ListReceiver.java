@@ -21,15 +21,18 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 		while(true) {
 			try {
 				String[] split = incoming.take().split("/");
-				ListMessage listMessage = new ListMessage(split[1]);
+				ListMessage listMessage = new ListMessage(split[0]);
 				String senderID =listMessage.getSenderID();
 
 
 				//What about ignoring all list messages from peer if we already synchronized?
 				// the message is for me : let me update my database
 				// also: sequence numbers correspond
-				if(!listMessage.getPeerID().equals(myMuxDemux.getMyID()) &&
+				if(listMessage.getPeerID().equals(myMuxDemux.getMyID()) &&
 						listMessage.getSequenceNo() == myMuxDemux.getbyID(senderID).getPeerSeqNum() ) {
+
+					if(Test.DEBUG)
+						System.out.println("LISTRECEIVER : received a LIST message from "+senderID);
 
 					// TODO questions:
 					// 				for seqNo we check equality? I think of it as, i receive the same version as
@@ -55,6 +58,8 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 
 						// I remove the old image and the old track and start again
 						else{
+							if(Test.DEBUG)
+								System.out.println("LISTRECEIVER : removing image database for sender"+senderID);
 							images.remove(senderID);
 							trackImages.remove(senderID);
 
@@ -73,7 +78,14 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 					}
 					//create an image of the peer database if not already exists
 					else{
+						if(Test.DEBUG)
+							System.out.println("LISTRECEIVER : creating image database for peer  "+senderID);
 						Database newDatabase = new Database(listMessage.getTotalParts());
+						for(int i = 0 ; i<listMessage.getTotalParts() ; i++){
+							newDatabase.stringQueue.add("");
+						}
+						if(Test.DEBUG)
+							System.out.println("LISTRECEIVER : value of totalParts  "+listMessage.getTotalParts());
 						newDatabase.stringQueue.set(listMessage.getPartNo(),listMessage.getData());
 						images.put(senderID,newDatabase);
 
@@ -86,7 +98,14 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 					//when receiving all the elements update the real database
 					//if in my databases overwrite and remove the image and the track
 					if(trackImages.get(senderID).size()==listMessage.getTotalParts()){
-						myMuxDemux.getOthersDatabases().replace(senderID,images.get(senderID));
+						if(Test.DEBUG)
+							System.out.println("LISTRECEIVER : updating the real database for "+senderID);
+						if(Test.DEBUG)
+							System.out.println("LISTRECEIVER : the image database is "+images.get(senderID).stringQueue);
+						myMuxDemux.getOthersDatabases().put(senderID,images.get(senderID));
+//						myMuxDemux.getOthersDatabases().replace(senderID,images.get(senderID));
+						if(Test.DEBUG)
+							System.out.println("LISTRECEIVER : the size of the database "+myMuxDemux.getOthersDatabases().size());
 						images.remove(senderID);
 						trackImages.remove(senderID);
 						//update  peerState

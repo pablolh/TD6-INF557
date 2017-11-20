@@ -60,7 +60,7 @@ public class ListMessage {
     }
 
     public String getListMessageAsEncodedString(){
-        return "SYN;" + this.senderID + ";" + this.peerID + ";" + this.sequenceNo +
+        return "LIST;" + this.senderID + ";" + this.peerID + ";" + this.sequenceNo +
                 ";"+ this.TotalParts + ";" + this.partNo + ";" + this.data;
     }
 
