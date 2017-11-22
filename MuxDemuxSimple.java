@@ -18,7 +18,7 @@ public class MuxDemuxSimple implements Runnable{
     private SimpleMessageHandler[] myMessageHandlers;
     private LinkedBlockingDeque<String> outgoing = new LinkedBlockingDeque<String>(20);
     private LinkedBlockingDeque<PeerRecord> peerTable = new LinkedBlockingDeque<PeerRecord>(20);
-    private String myID ="hell";
+    private String myID =Test.MYID;
 
     //TODO questions:
     //              "create and test the databases of my peers?"
@@ -133,11 +133,13 @@ public class MuxDemuxSimple implements Runnable{
     }
 
     public  String toStringPeerTable(){
-        String res="PeerTable{";
+        String res="\n**********************************************************************\n";
+        res+="peerID;peerIPAddress;peerSeqNum;expirationTime;peerState\n";
+        res+="**********************************************************************\n";
         for(PeerRecord pr : this.peerTable) {
-            res+=pr.toString()+";\n";
+            res+=pr.toString();
         }
-        res+="}";
+        res+="**********************************************************************\n\n";
         return res;
     }
 
@@ -146,10 +148,16 @@ public class MuxDemuxSimple implements Runnable{
     }
 
     public String toStringOthersDatabases(){
-        String s= "OthersDatabase {";
-        for(Map.Entry<String,Database> db : othersDatabases.entrySet())
-            s+="<"+db.getKey()+"+"+db.getValue();
-        s+=" }";
+        String s="";
+        if(othersDatabases.size()>1){
+            s= "\n\n***********************************************************************\n";
+            for(Map.Entry<String,Database> db : othersDatabases.entrySet()){
+                s+="<"+db.getKey()+";"+db.getValue().getDatabaseSequenceNumber()+">\n";
+                s+= db.getValue().toStringofStringQueue();
+            }
+            s+= "***********************************************************************\n\n";
+        }
+
         return s;
     }
 }

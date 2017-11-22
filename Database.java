@@ -50,4 +50,12 @@ public class Database {
 	public void setDatabaseSequenceNumber(int databaseSequenceNumber){
 	    this.databaseSequenceNumber=databaseSequenceNumber;
     }
+
+    public String toStringofStringQueue(){
+		String res = "";
+		for(String str : stringQueue){
+			res+="*****"+str+"\n";
+		}
+		return res;
+	}
 }

@@ -67,6 +67,7 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 							for(int i = 0 ; i<listMessage.getTotalParts() ; i++){
 								newDatabase.stringQueue.add("");
 							}
+							newDatabase.setDatabaseSequenceNumber(listMessage.getSequenceNo());
 							newDatabase.stringQueue.set(listMessage.getPartNo(),listMessage.getData());
 							images.put(senderID,newDatabase);
 
@@ -87,6 +88,7 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 						for(int i = 0 ; i<listMessage.getTotalParts() ; i++){
 							newDatabase.stringQueue.add("");
 						}
+						newDatabase.setDatabaseSequenceNumber(listMessage.getSequenceNo());
 						if(Test.DEBUG)
 							System.out.println("LISTRECEIVER : value of totalParts  "+listMessage.getTotalParts());
 						newDatabase.stringQueue.set(listMessage.getPartNo(),listMessage.getData());

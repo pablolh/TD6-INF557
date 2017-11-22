@@ -66,13 +66,7 @@ public class PeerRecord {
 
     @Override
     public String toString() {
-        return "PeerRecord{" +
-                "peerID='" + peerID + '\'' +
-                ", peerIPAddress='" + peerIPAddress + '\'' +
-                ", peerSeqNum=" + peerSeqNum +
-                ", expirationTime=" + expirationTime +
-                ", peerState='" + peerState + '\'' +
-                '}';
+        return peerID+";"+peerIPAddress+";"+peerSeqNum+";"+expirationTime+";"+peerState+"\n";
     }
 
 }
