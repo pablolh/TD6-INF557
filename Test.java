@@ -4,8 +4,8 @@ import java.net.*;
 
 public class Test {
 
-    public static final boolean DEBUG = true;
-    public static final int PORTNO = 4242;
+    public static final boolean DEBUG = false;
+    public static final int PORTNO = 4241;
     public static final int HELLOINTERVAL = 60;     //in s
     public static final int SENDINGPERIOD = 5000;    //in ms
     public static void main (String[] args){
@@ -33,7 +33,8 @@ public class Test {
         handlers[4]= new SynSender();
         handlers[5]= new ListReceiver();
         MuxDemuxSimple dm = new MuxDemuxSimple(handlers, mySocket);
-        dm.myDatabase.update(null);
+        dm.myDatabase.update("Hi I Am Biot");
+        dm.myDatabase.update("Hi I Am Hossam");
 
         new Thread(dm).start();
         for( int i = 0 ; i<handlers.length ; i++){

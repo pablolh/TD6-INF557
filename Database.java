@@ -28,9 +28,9 @@ public class Database {
 	}
 	
 	// will be implemented differently. must take LIST messages and append them
-	public void update(ListMessage listMessage) {
+	public void update(String str) {
 
-            stringQueue.add("Hi I Am BIOT");
+            stringQueue.add(str);
 			databaseSequenceNumber++;
 
 	}
