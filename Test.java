@@ -5,7 +5,7 @@ import java.net.*;
 public class Test {
 
     public static final boolean DEBUG = true;
-    public static final int PORTNO = 4241;
+    public static final int PORTNO = 4242;
     public static final int HELLOINTERVAL = 60;     //in s
     public static final int SENDINGPERIOD = 5000;    //in ms
     public static void main (String[] args){

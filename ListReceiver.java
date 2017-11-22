@@ -64,6 +64,9 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 							trackImages.remove(senderID);
 
 							Database newDatabase = new Database(listMessage.getTotalParts());
+							for(int i = 0 ; i<listMessage.getTotalParts() ; i++){
+								newDatabase.stringQueue.add("");
+							}
 							newDatabase.stringQueue.set(listMessage.getPartNo(),listMessage.getData());
 							images.put(senderID,newDatabase);
 
