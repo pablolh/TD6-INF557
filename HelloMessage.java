@@ -23,12 +23,15 @@ public class HelloMessage {
             throw new Exception("incorrect format of HelloMessage sequence number bounders");
         if(Integer.parseInt(tmp[4]) < 0 || Integer.parseInt(tmp[4])>255)
             throw new Exception("Number of peers exceeded 255");
+        if(Integer.parseInt(tmp[4]) != tmp.length - 5)
+            throw new Exception("Wrong number of peers");
         this.senderID = tmp[1];
         this.sequenceNo = Integer.parseInt(tmp[2]);
         this.helloInterval = Integer.parseInt(tmp[3]);
         this.numPeers = Integer.parseInt(tmp[4]);
         this.peer = new Vector<String>();
-        for (int i = 5 ; i < this.numPeers+5 ; i++){
+        System.out.println(s);
+        if(tmp.length >= 5) for (int i = 5 ; i < this.numPeers+5 ; i++){
             this.peer.add(tmp[i]);
         }
 
