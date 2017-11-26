@@ -9,7 +9,7 @@ public class Test {
     public static final int HELLOINTERVAL = 60;     //in s
     public static final int SENDINGPERIOD = 5000;    //in ms
     public static final int FOLDERCHECKINTERVAL = 5000;
-    public static final String SHAREDFOLDERPATH = "/home/pablo/rootfolder/mysharedfilesfolder/";
+    public static final String SHAREDFOLDERPATH = "/home/pablo/rootfolder/mysharedfilesfolder/"; // with finishing / (important) !
     public static final String MYID = "pablo";
     public static void main (String[] args){
 
@@ -39,6 +39,9 @@ public class Test {
         MuxDemuxSimple dm = new MuxDemuxSimple(handlers, mySocket);
 
         new Thread(dm).start();
+        
+        new Thread(new FileServer()).start();
+        
         for( int i = 0 ; i<handlers.length ; i++){
             new Thread((Runnable) handlers[i]).start();
         }
