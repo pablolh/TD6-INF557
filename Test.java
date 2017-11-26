@@ -4,12 +4,12 @@ import java.net.*;
 
 public class Test {
 
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
     public static final int PORTNO = 4242;
     public static final int HELLOINTERVAL = 60;     //in s
     public static final int SENDINGPERIOD = 5000;    //in ms
     public static final int FOLDERCHECKINTERVAL = 5000;
-    public static final String SHAREDFOLDERPATH = "/home/pablo/rootfolder/";
+    public static final String SHAREDFOLDERPATH = "/home/pablo/rootfolder/mysharedfilesfolder/";
     public static final String MYID = "pablo";
     public static void main (String[] args){
 
@@ -28,17 +28,15 @@ public class Test {
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        SimpleMessageHandler[] handlers = new SimpleMessageHandler[6];
+        SimpleMessageHandler[] handlers = new SimpleMessageHandler[7];
         handlers[0]= new HelloSender();
         handlers[1]= new HelloReceiver();
         handlers[2]= new DebugReceiver();
         handlers[3]= new SynReceiver();
         handlers[4]= new SynSender();
         handlers[5]= new ListReceiver();
+        handlers[6]= new SharedFolderHandler();
         MuxDemuxSimple dm = new MuxDemuxSimple(handlers, mySocket);
-        dm.myDatabase.update("Yes");
-        dm.myDatabase.update("Hola");
-        dm.myDatabase.update("Yahooooo");
 
         new Thread(dm).start();
         for( int i = 0 ; i<handlers.length ; i++){

@@ -27,13 +27,17 @@ public class Database {
 		return databaseSequenceNumber;
 	}
 	
-	// will be implemented differently. must take LIST messages and append them
 	public void update(String str) {
 
             stringQueue.add(str);
 			databaseSequenceNumber++;
 
 	}
+	public void update() {
+
+		databaseSequenceNumber++;
+
+}
 
 	@Override
 	public String toString() {
