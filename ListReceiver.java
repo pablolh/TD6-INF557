@@ -1,4 +1,5 @@
 /* Le Hénaff Pablo ; Basudan Hossam*/
+import java.io.File;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -103,6 +104,7 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 					//when receiving all the elements update the real database
 					//if in my databases overwrite and remove the image and the track
 					if(trackImages.get(senderID).size()==listMessage.getTotalParts()){
+												
 						if(Test.DEBUG)
 							System.out.println("LISTRECEIVER : updating the real database for "+senderID);
 						if(Test.DEBUG)
@@ -116,12 +118,31 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 						trackImages.remove(senderID);
 						//update  peerState
 						myMuxDemux.getbyID(listMessage.getSenderID()).setPeerState("synchronized");
-
+						
+						
 						//
 						//update expiration time
 						//How about the listInterval?
 						//int listInterval = 60; // in s
 						//myMuxDemux.getbyID(listMessage.getSenderID()).setExpirationTime(Instant.now().plusSeconds(listInterval));
+						
+						
+						
+						//////// PEER IS NOW SYNCHRONIZED. DOWNLOAD THE FILES TO BE DOWNLOADED ! //////////
+												
+						for (String fileName : myMuxDemux.getOthersDatabases().get(senderID).stringQueue) {
+
+							File file = new File(Test.SHAREDFOLDERPATH + senderID + "/" + fileName);
+							if(!file.exists()) {
+								
+								// then add it to the download queue
+								
+								
+								
+							}
+							
+						}
+						
 					}
 
 				}

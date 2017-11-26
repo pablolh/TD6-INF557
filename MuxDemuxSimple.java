@@ -3,9 +3,13 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -13,13 +17,15 @@ import java.util.concurrent.LinkedBlockingDeque;
 import static java.lang.System.currentTimeMillis;
 import static java.lang.System.exit;
 
-public class MuxDemuxSimple implements Runnable{
+public class MuxDemuxSimple implements Runnable {
     private DatagramSocket mySocket = null;
     private SimpleMessageHandler[] myMessageHandlers;
     private LinkedBlockingDeque<String> outgoing = new LinkedBlockingDeque<String>(20);
     private LinkedBlockingDeque<PeerRecord> peerTable = new LinkedBlockingDeque<PeerRecord>(20);
     private String myID =Test.MYID;
-
+    
+    LinkedBlockingDeque<DownloadObject> downloadQueue = new LinkedBlockingDeque<DownloadObject>(20);
+    
     //TODO questions:
     //              "create and test the databases of my peers?"
     //              H1 : Do we all have the same database with different versions? --> only update
