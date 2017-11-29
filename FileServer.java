@@ -56,6 +56,8 @@ public class FileServer implements Runnable {
 						connectionOutputStream.write(Files.readAllBytes(toBeServed.toPath())); // second call to write = OK ???
 						
 					}
+
+					serverSocket.close();
 					
 				}
 				

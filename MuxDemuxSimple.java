@@ -155,7 +155,7 @@ public class MuxDemuxSimple implements Runnable {
 
     public String toStringOthersDatabases(){
         String s="";
-        if(othersDatabases.size()>1){
+        if(othersDatabases.size()>=1){
             s= "\n\n***********************************************************************\n";
             for(Map.Entry<String,Database> db : othersDatabases.entrySet()){
                 s+="<"+db.getKey()+";"+db.getValue().getDatabaseSequenceNumber()+">\n";

@@ -118,6 +118,7 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 							System.out.println("LISTRECEIVER : the size of the database "+myMuxDemux.getOthersDatabases().size());
 						images.remove(senderID);
 						trackImages.remove(senderID);
+
 						//update  peerState
 						myMuxDemux.getbyID(listMessage.getSenderID()).setPeerState("synchronized");
 						
@@ -131,8 +132,37 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 						
 						
 						//////// PEER IS NOW SYNCHRONIZED. DOWNLOAD THE FILES TO BE DOWNLOADED ! //////////
-						PeerFolderHandler pfh= new PeerFolderHandler(senderID);
-						new Thread(pfh).start();
+//						PeerFolderHandler pfh= new PeerFolderHandler(senderID);
+//						new Thread(pfh).start();
+						//Create a folder for this peer if not exists
+						File senderFolder = new File(Test.ROOTFOLDERERPATH + senderID);
+						if(!senderFolder.exists()) {
+							senderFolder.mkdir();
+						}
+
+						// ADD TO DOWNLOADQUEUE
+						if(Test.DEBUG)
+							System.out.println("PeerFolderHandler : "+myMuxDemux.getOthersDatabases().get(senderID));
+						for (String fileName : myMuxDemux.getOthersDatabases().get(senderID).stringQueue) {
+
+							File file = new File(Test.ROOTFOLDERERPATH + senderID + "/" + fileName);
+							if(!file.exists()) {
+								DownloadObject dO = new DownloadObject(senderID,fileName);
+								myMuxDemux.downloadQueue.add(dO);
+								if(Test.DEBUG)
+									System.out.println("LISTRECEIVER : added DownloadObject "+dO+" to downloadQueue");
+
+							}
+
+						}
+
+						//REMOVE ALL REMOVED FILES
+						File[] listOfFiles = senderFolder.listFiles();
+
+						for (File file: listOfFiles) {
+							if(myMuxDemux.getOthersDatabases().get(senderID).stringQueue.contains(file.getName()))
+								file.delete();
+						}
 					}
 
 				}
