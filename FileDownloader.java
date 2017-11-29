@@ -1,12 +1,9 @@
-import java.io.File;
-import java.io.FileOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
-//import java.nio.file.Files;
-//import java.nio.file.Path;
-//import java.nio.file.Paths;
-//import java.nio.file.StandardOpenOption;
-//import java.util.HashMap;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 
 
 
@@ -30,7 +27,7 @@ public class FileDownloader implements SimpleMessageHandler, Runnable {
 				if(md.getbyID(mydo.getSenderID()).getPeerState().equals("synchronized")){
 
 					// create new socket corresponding to the sender's IP address
-					InetAddress peerInetAddress = InetAddress.getByAddress(md.getbyID(mydo.getSenderID()).getPeerIPAddress().getBytes());
+					InetAddress peerInetAddress = InetAddress.getByName(md.getbyID(mydo.getSenderID()).getPeerIPAddress());
 					Socket socketToSender = new Socket(peerInetAddress, Test.PORTNO);
 
 					// send the appropriate request for mydo.fileName
@@ -42,9 +39,12 @@ public class FileDownloader implements SimpleMessageHandler, Runnable {
 
 					String filePath = Test.ROOTFOLDERERPATH + mydo.getSenderID() + "/" + mydo.getFileName();
 
-					FileOutputStream out = new FileOutputStream(filePath);
-					out.write(buffer);
-					out.close();
+//					FileOutputStream out = new FileOutputStream(filePath);
+//					out.write(new String(buffer).getBytes());
+//					out.close();
+
+					Path file = Paths.get(filePath);
+					Files.write(file, buffer);
 
 
 					socketToSender.close();
@@ -53,7 +53,7 @@ public class FileDownloader implements SimpleMessageHandler, Runnable {
 			}
 			catch (Exception e) {
 				if(Test.DEBUG)
-					System.err.println(e);
+					e.printStackTrace();
 			}
 
 		}

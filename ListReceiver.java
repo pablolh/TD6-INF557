@@ -160,7 +160,7 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 						File[] listOfFiles = senderFolder.listFiles();
 
 						for (File file: listOfFiles) {
-							if(myMuxDemux.getOthersDatabases().get(senderID).stringQueue.contains(file.getName()))
+							if(!myMuxDemux.getOthersDatabases().get(senderID).stringQueue.contains(file.getName()))
 								file.delete();
 						}
 					}
