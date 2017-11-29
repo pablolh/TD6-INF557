@@ -58,14 +58,17 @@ public class FileDownloader implements SimpleMessageHandler, Runnable {
                     
                    	bufferedReader.readLine();
                     
-                    int fileSizeInBytes = Integer.parseInt(bufferedReader.readLine());
-                    
-                    byte[] buffer = new byte[fileSizeInBytes];
-                    
-                    in.read(buffer);
-                    
-                    output.write(buffer, 0, fileSizeInBytes);
-
+                   	String tmp;
+                   	if((tmp = bufferedReader.readLine()) != null) {
+	                    int fileSizeInBytes = Integer.parseInt(tmp);
+	                    
+	                    byte[] buffer = new byte[fileSizeInBytes];
+	                    
+	                    in.read(buffer);
+	                    
+	                    output.write(buffer, 0, fileSizeInBytes);
+                   	}
+                   	
                     // Closing the FileOutputStream handle
                     output.close();
 
