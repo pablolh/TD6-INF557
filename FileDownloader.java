@@ -19,8 +19,6 @@ public class FileDownloader implements SimpleMessageHandler, Runnable {
 
 			// take files to be downloaded from the download queue and download them from the appropriate peer, in the appropriate folder in the sharedfolder
 
-			byte[] buffer = new byte[Test.FILEDOWNLOADERBUFFERSIZE]; // buffer size to be changed and adapted
-
 			try {
 				DownloadObject mydo = md.downloadQueue.take();
 
@@ -55,21 +53,21 @@ public class FileDownloader implements SimpleMessageHandler, Runnable {
                     OutputStream output = new FileOutputStream(filePath);
 
 //                    byte[] buffer = new byte[1024];
-                    int bytesRead=0;
-                    while ((bytesRead = in.read(buffer)) != -1) {
-                        output.write(buffer, 0, bytesRead);
-                    }
+                    
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+                    
+                   	bufferedReader.readLine();
+                    
+                    int fileSizeInBytes = Integer.parseInt(bufferedReader.readLine());
+                    
+                    byte[] buffer = new byte[fileSizeInBytes];
+                    
+                    in.read(buffer);
+                    
+                    output.write(buffer, 0, fileSizeInBytes);
+
                     // Closing the FileOutputStream handle
                     output.close();
-
-
-//					FileOutputStream out = new FileOutputStream(filePath);
-//					out.write(buffer);
-//					out.close();
-
-//					Path file = Paths.get(filePath);
-//					Files.write(file, buffer);
-
 
 					socketToSender.close();
 
