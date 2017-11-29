@@ -1,3 +1,4 @@
+import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.nio.file.Files;
@@ -35,16 +36,39 @@ public class FileDownloader implements SimpleMessageHandler, Runnable {
 
 
 					// then write buffer in the corresponding file
-					socketToSender.getInputStream().read(buffer);
+//                    BufferedReader br = new BufferedReader(new InputStreamReader(socketToSender.getInputStream()));
+//					socketToSender.getInputStream().read(buffer);
 
+//                    String line="";
 					String filePath = Test.ROOTFOLDERERPATH + mydo.getSenderID() + "/" + mydo.getFileName();
+//                    PrintWriter out = new PrintWriter(filePath);
+//                    while (line!=null){
+//                        line=br.readLine();
+//                        out.write(line);
+//
+//                    }
+
+                    InputStream in = socketToSender.getInputStream();
+
+                    // Writing the file to disk
+                    // Instantiating a new output stream object
+                    OutputStream output = new FileOutputStream(filePath);
+
+//                    byte[] buffer = new byte[1024];
+                    int bytesRead=0;
+                    while ((bytesRead = in.read(buffer)) != -1) {
+                        output.write(buffer, 0, bytesRead);
+                    }
+                    // Closing the FileOutputStream handle
+                    output.close();
+
 
 //					FileOutputStream out = new FileOutputStream(filePath);
-//					out.write(new String(buffer).getBytes());
+//					out.write(buffer);
 //					out.close();
 
-					Path file = Paths.get(filePath);
-					Files.write(file, buffer);
+//					Path file = Paths.get(filePath);
+//					Files.write(file, buffer);
 
 
 					socketToSender.close();

@@ -1,7 +1,4 @@
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.Files;
@@ -51,10 +48,22 @@ public class FileServer implements Runnable {
 					if(toBeServed.exists()) { // check file actually exists in shared folder
 						
 						if(Test.DEBUG) System.out.println("Serving file...");
-						
-						connectionOutputStream.write((tmp[1] + "\n" + toBeServed.length()+"\n").getBytes());
-						connectionOutputStream.write(Files.readAllBytes(toBeServed.toPath())); // second call to write = OK ???
-						
+
+                        connectionOutputStream.write((tmp[1] + "\n" + toBeServed.length()+"\n").getBytes());
+
+                        //						connectionOutputStream.write(Files.readAllBytes(toBeServed.toPath())); // second call to write = OK ???
+                        byte[] sendingBuffer = new byte[(int) toBeServed.length()];
+
+                        FileInputStream fis = new FileInputStream(toBeServed);
+                        BufferedInputStream bis = new BufferedInputStream(fis);
+                        bis.read(sendingBuffer, 0, sendingBuffer.length);
+
+                        OutputStream os = connectionSocket.getOutputStream();
+
+                        os.write(sendingBuffer, 0, sendingBuffer.length);
+
+                        os.flush();
+                        
 					}
 				}
                 connectionSocket.close();
