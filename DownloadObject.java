@@ -1,8 +1,19 @@
+import java.net.InetAddress;
+
 class DownloadObject {
-	public String senderID;
-	public String fileName;
+	private String senderID;
+	private String fileName;
 	
-	DownloadObject(String i, String f) {
-		this.senderID = i; this.fileName = f;
+	DownloadObject(String senderID, String fileName) {
+		this.senderID = senderID;
+		this.fileName = fileName;
+	}
+
+	public String getSenderID() {
+		return senderID;
+	}
+
+	public String getFileName() {
+		return fileName;
 	}
 }

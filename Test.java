@@ -1,4 +1,5 @@
 /* Le Hénaff Pablo ; Basudan Hossam*/
+import java.io.File;
 import java.net.*;
 
 
@@ -9,8 +10,9 @@ public class Test {
     public static final int HELLOINTERVAL = 60;     //in s
     public static final int SENDINGPERIOD = 5000;    //in ms
     public static final int FOLDERCHECKINTERVAL = 5000;
-    public static final String SHAREDFOLDERPATH = "/home/pablo/rootfolder/mysharedfilesfolder/"; // with finishing / (important) !
-    public static final String MYID = "pablo";
+    public static final String MYID = "awesome";
+    public static final String ROOTFOLDERERPATH = "/home/"+MYID+"/rootfolder/";
+    public static final String SHAREDFOLDERPATH = ROOTFOLDERERPATH+"mysharedfilesfolder/"; // with finishing / (important) !
     public static final int FILEDOWNLOADERBUFFERSIZE = 1000;
     public static void main (String[] args){
 
@@ -41,7 +43,6 @@ public class Test {
         MuxDemuxSimple dm = new MuxDemuxSimple(handlers, mySocket);
 
         new Thread(dm).start();
-        
         new Thread(new FileServer()).start();
         
         

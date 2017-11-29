@@ -3,6 +3,8 @@ import java.io.File;
 import java.time.Instant;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
 
 public class ListReceiver implements SimpleMessageHandler, Runnable  {
@@ -129,20 +131,8 @@ public class ListReceiver implements SimpleMessageHandler, Runnable  {
 						
 						
 						//////// PEER IS NOW SYNCHRONIZED. DOWNLOAD THE FILES TO BE DOWNLOADED ! //////////
-												
-						for (String fileName : myMuxDemux.getOthersDatabases().get(senderID).stringQueue) {
-
-							File file = new File(Test.SHAREDFOLDERPATH + senderID + "/" + fileName);
-							if(!file.exists()) {
-								
-								// then add it to the download queue
-								
-								
-								
-							}
-							
-						}
-						
+						PeerFolderHandler pfh= new PeerFolderHandler(senderID);
+						new Thread(pfh).start();
 					}
 
 				}

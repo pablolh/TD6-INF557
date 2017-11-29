@@ -52,7 +52,7 @@ public class FileServer implements Runnable {
 						
 						if(Test.DEBUG) System.out.println("Serving file...");
 						
-						connectionOutputStream.write((tmp[0] + "\n" + toBeServed.length()).getBytes());
+						connectionOutputStream.write((tmp[1] + "\n" + toBeServed.length()+"\n").getBytes());
 						connectionOutputStream.write(Files.readAllBytes(toBeServed.toPath())); // second call to write = OK ???
 						
 					}
